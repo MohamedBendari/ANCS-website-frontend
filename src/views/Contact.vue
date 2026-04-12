@@ -34,13 +34,28 @@
           </div>
         </div>
 
-        <form class="contact-form" @submit.prevent="submitForm">
+        <!-- لو مش logged in — gate -->
+        <div v-if="!isLoggedIn" class="contact-gate">
+          <div class="gate-icon"><i class="fas fa-lock"></i></div>
+          <h3>Login Required</h3>
+          <p>You need to be logged in with your account to send us a message.</p>
+          <div class="gate-btns">
+            <button @click="openAuth('login')" class="gate-btn primary">
+              <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button @click="openAuth('signup')" class="gate-btn secondary">
+              <i class="fas fa-user-plus"></i> Create Account
+            </button>
+          </div>
+        </div>
+
+        <form v-else class="contact-form" @submit.prevent="submitForm">
           <div class="form-group">
             <label for="name">Your Name</label>
-            <input
-              type="text"
+            <input 
+              type="text" 
               id="name"
-              v-model="form.name"
+              v-model="form.name" 
               placeholder="John Doe"
               required
               :disabled="isSubmitting"
@@ -49,10 +64,10 @@
 
           <div class="form-group">
             <label for="email">Email Address</label>
-            <input
-              type="email"
+            <input 
+              type="email" 
               id="email"
-              v-model="form.email"
+              v-model="form.email" 
               placeholder="john@example.com"
               required
               :disabled="isSubmitting"
@@ -72,9 +87,9 @@
 
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea
+            <textarea 
               id="message"
-              v-model="form.message"
+              v-model="form.message" 
               placeholder="Tell us more about your inquiry..."
               rows="5"
               required
@@ -104,7 +119,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useAuthStore } from '../stores/auth'
+
+const emit = defineEmits(['open-auth'])
+const openAuth = (type) => emit('open-auth', type)
+const authStore = useAuthStore()
+const isLoggedIn = computed(() => authStore.isLoggedIn)
 
 const form = ref({
   name: '',
@@ -240,6 +261,39 @@ const submitForm = async () => {
   color: #42a5f5;
 }
 
+.contact-gate {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(66,165,245,0.15);
+  border-radius: 20px;
+  padding: 50px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.contact-gate .gate-icon {
+  width: 70px; height: 70px;
+  background: rgba(66,165,245,0.1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: #42a5f5;
+  margin-bottom: 8px;
+}
+.contact-gate h3 { font-size: 22px; color: #fff; font-weight: 700; }
+.contact-gate p { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 360px; }
+.gate-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+.gate-btn {
+  padding: 12px 28px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  font-family: inherit; display: flex; align-items: center; gap: 8px;
+  transition: all 0.25s; border: none;
+}
+.gate-btn.primary { background: linear-gradient(135deg, #42a5f5, #0077b6); color: #fff; }
+.gate-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,119,182,0.4); }
+.gate-btn.secondary { background: rgba(66,165,245,0.1); border: 1px solid rgba(66,165,245,0.3); color: #42a5f5; }
+.gate-btn.secondary:hover { background: rgba(66,165,245,0.2); }
+
 .contact-form {
   background: rgba(255, 255, 255, 0.05);
   padding: 40px;
@@ -346,54 +400,5 @@ const submitForm = async () => {
   .contact-header h1 { font-size: 36px; }
   .contact-info { flex-direction: column; }
   .info-card { min-width: 100%; }
-}
-
-@media (max-width: 600px) {
-  .contact {
-    padding: 90px 20px 60px;
-  }
-
-  .contact-header {
-    margin-bottom: 40px;
-  }
-
-  .contact-header h1 {
-    font-size: 28px;
-  }
-
-  .contact-header p {
-    font-size: 16px;
-  }
-
-  .contact-form {
-    padding: 20px;
-  }
-
-  .form-group label {
-    font-size: 13px;
-  }
-
-  .form-group input,
-  .form-group textarea {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .form-submit {
-    padding: 12px 24px;
-    font-size: 14px;
-  }
-
-  .info-card {
-    padding: 16px;
-  }
-
-  .info-card h4 {
-    font-size: 14px;
-  }
-
-  .info-card p {
-    font-size: 12px;
-  }
 }
 </style>

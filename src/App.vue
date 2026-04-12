@@ -25,16 +25,26 @@
           <template v-if="!isLoggedIn">
             <button class="btn-login" @click="openAuth('login')">Login</button>
             <button class="btn-signup" @click="openAuth('signup')">Sign Up</button>
+            <router-link to="/download" class="btn-download">
+              <i class="fas fa-download"></i> Download
+            </router-link>
           </template>
           <template v-else>
-            <router-link to="/dashboard" class="btn-dashboard">
-              <i class="fas fa-tachometer-alt"></i> Dashboard
+            <template v-if="authStore.isAdmin">
+              <router-link to="/dashboard" class="btn-dashboard">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+              </router-link>
+            </template>
+            <template v-else>
+              <div class="user-avatar-nav" :title="authStore.username">
+                {{ authStore.username?.charAt(0)?.toUpperCase() }}
+              </div>
+            </template>
+            <router-link to="/download" class="btn-download">
+              <i class="fas fa-download"></i> Download
             </router-link>
             <button class="btn-logout" @click="logout">Logout</button>
           </template>
-          <router-link to="/download" class="btn-download">
-            <i class="fas fa-download"></i> Download
-          </router-link>
         </div>
 
         <!-- Mobile Toggle -->
@@ -59,7 +69,15 @@
             <button @click="openAuth('signup'); closeMenu()">Sign Up</button>
           </template>
           <template v-else>
-            <router-link to="/dashboard" @click="closeMenu">Dashboard</router-link>
+            <template v-if="authStore.isAdmin">
+              <router-link to="/dashboard" @click="closeMenu">Dashboard</router-link>
+            </template>
+            <template v-else>
+              <div class="mobile-user-info">
+                <div class="mobile-avatar">{{ authStore.username?.charAt(0)?.toUpperCase() }}</div>
+                <span>{{ authStore.username }}</span>
+              </div>
+            </template>
             <button @click="logout; closeMenu()">Logout</button>
           </template>
           <router-link to="/download" class="mobile-download" @click="closeMenu">Download</router-link>
@@ -223,7 +241,7 @@ const handleScroll = () => { isScrolled.value = window.scrollY > 50 }
 onMounted(()  => window.addEventListener('scroll', handleScroll))
 onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 
-// ── Auth state — reactive via Pinia ──
+// ── Auth state ──
 const isLoggedIn = computed(() => authStore.isLoggedIn)
 
 const showAuthModal = ref(false)
@@ -259,25 +277,19 @@ const handleLogin = async () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: loginData.value.username,
-        password: loginData.value.password
+        username: loginData.value.username.trim(),
+        password: loginData.value.password.trim()
       })
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error || data.detail || 'Invalid credentials')
-
-    // ✅ store يحفظ token + username + role
     authStore.loginSuccess(data.access, data.username, data.role)
     closeAuth()
-
-    // ✅ توجيه حسب الـ role
     if (data.role === 'admin') {
       router.push('/dashboard')
-    } else {
-      router.push('/')   // user عادي يفضل في الموقع
     }
   } catch (err) {
-    authStatus.value = { type: 'error', message: err.message || 'Login failed. Please try again.' }
+    authStatus.value = { type: 'error', message: err.message || 'Login failed.' }
   } finally {
     isLoading.value = false
   }
@@ -291,11 +303,21 @@ const handleSignup = async () => {
   isLoading.value = true
   resetStatus()
   try {
-    await new Promise(r => setTimeout(r, 1000))
+    const res = await fetch('http://127.0.0.1:8000/api/register/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: signupData.value.name.trim(),
+        email:    signupData.value.email.trim(),
+        password: signupData.value.password
+      })
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.username?.[0] || data.email?.[0] || 'Signup failed')
     authStatus.value = { type: 'success', message: 'Account created! Please login.' }
     setTimeout(() => { isLogin.value = true; resetStatus() }, 1500)
   } catch (err) {
-    authStatus.value = { type: 'error', message: 'Signup failed. Please try again.' }
+    authStatus.value = { type: 'error', message: err.message || 'Signup failed.' }
   } finally {
     isLoading.value = false
   }
@@ -385,6 +407,27 @@ const logout = () => {
   padding: 8px 16px; border-radius: 8px; transition: all 0.25s; font-family: inherit;
 }
 .btn-logout:hover { background: #ef4444; color: #fff; }
+
+.user-avatar-nav {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, #42a5f5, #0077b6);
+  color: #fff; font-size: 15px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  cursor: default; border: 2px solid rgba(66,165,245,0.4);
+  flex-shrink: 0;
+}
+.mobile-user-info {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-radius: 10px;
+  background: rgba(66,165,245,0.08); border: 1px solid rgba(66,165,245,0.15);
+}
+.mobile-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: linear-gradient(135deg, #42a5f5, #0077b6);
+  color: #fff; font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.mobile-user-info span { font-size: 15px; color: #fff; font-weight: 500; }
 
 .mobile-toggle {
   display: none; flex-direction: column; justify-content: center;

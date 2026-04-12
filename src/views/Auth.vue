@@ -235,7 +235,8 @@ const handleLogin = async () => {
     const res = await fetch('http://127.0.0.1:8000/api/login/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: loginData.value.username, password: loginData.value.password })
+      
+      body: JSON.stringify({ username: loginData.value.username.trim(), password: loginData.value.password.trim() })
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error || data.detail || 'Invalid credentials')
@@ -264,10 +265,12 @@ const handleSignup = async () => {
   serverError.value = ''
   try {
     const res = await fetch('http://127.0.0.1:8000/api/register/', {
+
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      
       body: JSON.stringify({
-        username: signupData.value.name,
+        username: signupData.value.name.trim(),
         email:    signupData.value.email,
         password: signupData.value.password
       })

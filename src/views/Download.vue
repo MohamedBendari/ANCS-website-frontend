@@ -1,7 +1,17 @@
+<script setup>
+import { computed } from 'vue'
+import { useAuthStore } from '../stores/auth'
+
+const emit = defineEmits(['open-auth'])
+const openAuth = (type) => emit('open-auth', type)
+const authStore = useAuthStore()
+const isLoggedIn = computed(() => authStore.isLoggedIn)
+</script>
+
 <template>
   <section class="download">
     <div class="container">
-      <div class="section-header" data-aos="fade-up">
+      <div class="section-header">
         <span class="subtitle">Get Started</span>
         <h1>Download ANCS</h1>
         <p>Choose your platform and start automating your network configuration today</p>
@@ -9,7 +19,7 @@
 
       <div class="download-content">
         <!-- Main Download Card -->
-        <div class="main-download" data-aos="fade-up" data-aos-delay="100">
+        <div class="main-download">
           <div class="download-card featured">
             <div class="card-badge">Latest Release</div>
             <div class="platform-icon">
@@ -17,7 +27,7 @@
             </div>
             <h2>ANCS v1.0.0</h2>
             <p class="version-info">Stable Release • Released March 2026</p>
-
+            
             <div class="system-requirements">
               <h4>System Requirements:</h4>
               <ul>
@@ -29,28 +39,41 @@
             </div>
 
             <div class="download-buttons">
-              <!-- ✅ زرار التحميل بعد التعديل -->
-              <a
-                href="https://raw.githubusercontent.com/MOHAmED3467/ANCS-website/main/public/ANCS.exe"
-                class="btn primary"
-                download
-              >
-                <i class="fab fa-windows"></i>
-                Download for Windows
-              </a>
+              <!-- لو مش logged in — يطلب login -->
+              <div v-if="!isLoggedIn" class="login-gate">
+                <div class="gate-icon"><i class="fas fa-lock"></i></div>
+                <p>You need to be logged in to download ANCS</p>
+                <button @click="openAuth('login')" class="btn primary gate-btn">
+                  <i class="fas fa-sign-in-alt"></i> Login to Download
+                </button>
+                <button @click="openAuth('signup')" class="btn secondary gate-btn">
+                  <i class="fas fa-user-plus"></i> Create Account
+                </button>
+              </div>
 
-              <a href="#" class="btn secondary">
-                <i class="fab fa-linux"></i>
-                Download for Linux
-              </a>
+              <!-- لو logged in — يظهر أزرار التحميل -->
+              <template v-else>
+                <a
+                  href="https://raw.githubusercontent.com/MOHAmED3467/ANCS-website/main/public/ANCS.exe"
+                  class="btn primary"
+                  download
+                >
+                  <i class="fab fa-windows"></i>
+                  Download for Windows
+                </a>
+                <a href="#" class="btn secondary">
+                  <i class="fab fa-linux"></i>
+                  Download for Linux
+                </a>
+              </template>
             </div>
           </div>
         </div>
 
         <!-- Alternative Downloads -->
-        <div class="alt-downloads" data-aos="fade-up" data-aos-delay="200">
+        <div class="alt-downloads">
           <h3>Other Download Options</h3>
-
+          
           <div class="alt-grid">
             <a href="https://github.com/MOHAmED3467/ANCS-website" target="_blank" class="alt-card">
               <div class="alt-icon">
@@ -88,9 +111,9 @@
         </div>
 
         <!-- Installation Steps -->
-        <div class="installation-guide" data-aos="fade-up" data-aos-delay="300">
+        <div class="installation-guide">
           <h3>Quick Installation Guide</h3>
-
+          
           <div class="steps">
             <div class="step">
               <div class="step-number">1</div>
@@ -127,7 +150,7 @@
         </div>
 
         <!-- Support -->
-        <div class="support-section" data-aos="fade-up" data-aos-delay="400">
+        <div class="support-section">
           <div class="support-card">
             <i class="fas fa-headset"></i>
             <h3>Need Help?</h3>
@@ -181,7 +204,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent;
+  color: #fff;
 }
 
 .section-header p {
@@ -297,6 +320,27 @@
   flex-direction: column;
   gap: 15px;
 }
+
+.login-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 30px 20px;
+  background: rgba(66,165,245,0.05);
+  border: 1px solid rgba(66,165,245,0.15);
+  border-radius: 16px;
+  text-align: center;
+}
+.gate-icon {
+  width: 60px; height: 60px;
+  background: rgba(66,165,245,0.1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; color: #42a5f5;
+}
+.login-gate p { color: rgba(255,255,255,0.7); font-size: 15px; margin: 0; }
+.gate-btn { width: 100%; justify-content: center; }
 
 .btn {
   padding: 16px 32px;
@@ -535,10 +579,6 @@
 }
 
 @media (max-width: 768px) {
-  .download {
-    padding: 90px 20px 60px;
-  }
-
   .section-header h1 {
     font-size: 36px;
   }
@@ -553,60 +593,6 @@
 
   .download-buttons .btn {
     font-size: 14px;
-  }
-}
-
-@media (max-width: 600px) {
-  .download {
-    padding: 80px 16px 50px;
-  }
-
-  .section-header {
-    margin-bottom: 40px;
-  }
-
-  .section-header h1 {
-    font-size: 28px;
-  }
-
-  .section-header p {
-    font-size: 16px;
-  }
-
-  .download-card {
-    padding: 25px 16px;
-  }
-
-  .alt-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-
-  .alt-card {
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
-  }
-
-  .download-buttons {
-    gap: 10px;
-  }
-
-  .download-buttons .btn {
-    font-size: 13px;
-    padding: 14px 24px;
-  }
-
-  .steps {
-    gap: 15px;
-  }
-
-  .step {
-    padding: 20px 16px;
-  }
-
-  .support-card {
-    padding: 30px 20px;
   }
 }
 </style>

@@ -139,7 +139,7 @@
 <!-- Aliaa Sabry Mahmoud Mohamed -->
 <div class="team-card">
   <div class="card-image">
-    <img src="../assets/Aliaa Sabry.jpg.jpg" alt="Aliaa Sabry" class="avatar-img">
+    <img src="../assets/Aliaa Sabry.jpg" alt="Aliaa Sabry" class="avatar-img">
     <div class="social-links">
       <a href="https://github.com/aliaammm050-cell"><i class="fab fa-github"></i></a>
       <a href="https://www.linkedin.com/in/aliaa-sabry-08272a404"><i class="fab fa-linkedin"></i></a>

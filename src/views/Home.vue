@@ -18,7 +18,7 @@ const openAuth = (type) => emit('open-auth', type)
       </p>
       <div class="buttons">
         <router-link to="/download" class="btn primary">Download</router-link>
-        <button @click="openAuth('signup')" class="btn secondary">Get Started</button>
+        <router-link to="/team" class="btn secondary">Meet Our Team</router-link>
         <router-link to="/about" class="btn ghost">Learn More</router-link>
       </div>
     </div>
@@ -26,18 +26,9 @@ const openAuth = (type) => emit('open-auth', type)
 
   <section class="stats">
     <div class="stats-grid">
-      <div class="stat-card">
-        <h2>10x</h2>
-        <p>Faster Configuration</p>
-      </div>
-      <div class="stat-card">
-        <h2>AI</h2>
-        <p>Powered Analysis</p>
-      </div>
-      <div class="stat-card">
-        <h2>24/7</h2>
-        <p>Automation</p>
-      </div>
+      <div class="stat-card"><h2>10x</h2><p>Faster Configuration</p></div>
+      <div class="stat-card"><h2>AI</h2><p>Powered Analysis</p></div>
+      <div class="stat-card"><h2>24/7</h2><p>Automation</p></div>
     </div>
   </section>
 
@@ -80,22 +71,10 @@ const openAuth = (type) => emit('open-auth', type)
   <section class="advantages">
     <h2>Why Engineers Use ANCS</h2>
     <div class="adv-grid">
-      <div class="adv-card">
-        <h3>Automation</h3>
-        <p>Automate repetitive network configuration tasks.</p>
-      </div>
-      <div class="adv-card">
-        <h3>AI Analysis</h3>
-        <p>Machine learning detects abnormal network behaviour.</p>
-      </div>
-      <div class="adv-card">
-        <h3>Secure</h3>
-        <p>Encrypted credentials and safe SSH/Telnet execution.</p>
-      </div>
-      <div class="adv-card">
-        <h3>Centralized</h3>
-        <p>Manage all devices from a single dashboard.</p>
-      </div>
+      <div class="adv-card"><h3>Automation</h3><p>Automate repetitive network configuration tasks.</p></div>
+      <div class="adv-card"><h3>AI Analysis</h3><p>Machine learning detects abnormal network behaviour.</p></div>
+      <div class="adv-card"><h3>Secure</h3><p>Encrypted credentials and safe SSH/Telnet execution.</p></div>
+      <div class="adv-card"><h3>Centralized</h3><p>Manage all devices from a single dashboard.</p></div>
     </div>
   </section>
 
@@ -128,79 +107,74 @@ const openAuth = (type) => emit('open-auth', type)
 
 <style scoped>
 section { padding: 100px 20px; text-align: center; }
-h2 { font-size: clamp(28px, 5vw, 42px); margin-bottom: 30px; }
-p { color: #cbd5e1; }
+h2 { font-size: clamp(28px, 5vw, 42px); margin-bottom: 30px; color: var(--text-primary, #fff); }
+p { color: var(--text-muted, #cbd5e1); }
 
-/* ── HERO ── */
+/* HERO */
 .hero {
-  min-height: 100vh;
-  padding: 72px 20px 60px;
+  min-height: 100vh; padding: 72px 20px 60px;
   background: linear-gradient(180deg, #0b1c2c, #081520);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: white; display: flex; justify-content: center; align-items: center;
 }
 .hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 700px;
-  width: 100%;
-  padding: 20px 0;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; max-width: 700px; width: 100%; padding: 20px 0;
 }
-.hero-logo { width: clamp(70px, 15vw, 100px); margin-bottom: 20px; }
-.hero h1 { font-size: clamp(42px, 10vw, 72px); font-weight: 900; line-height: 1.1; }
+.hero-logo { width: clamp(70px, 15vw, 100px); margin-bottom: 20px; border-radius: 18px; box-shadow: 0 8px 32px rgba(66,165,245,0.25); }
+.hero h1 { font-size: clamp(42px, 10vw, 72px); font-weight: 900; line-height: 1.1; color: #fff; }
 .hero h3 { font-size: clamp(14px, 3.5vw, 20px); color: #42a5f5; margin: 12px 0 16px; font-weight: 500; }
-.hero > .hero-content > p { font-size: clamp(14px, 3vw, 17px); max-width: 560px; }
+.hero > .hero-content > p { font-size: clamp(14px, 3vw, 17px); max-width: 560px; color: rgba(255,255,255,0.7); }
 .buttons { margin-top: 30px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
 .btn { padding: 13px 26px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s; font-family: inherit; cursor: pointer; font-size: clamp(13px, 3vw, 15px); }
 .primary { background: #0077b6; color: white; border: none; }
 .primary:hover { background: #0096c7; transform: translateY(-3px); }
 .secondary { border: 1px solid rgba(66,165,245,0.5); color: #42a5f5; background: rgba(66,165,245,0.08); }
-.secondary:hover { background: rgba(66,165,245,0.15); transform: translateY(-3px); }
-.ghost { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); background: none; }
+.secondary:hover { background: rgba(66,165,245,0.2); transform: translateY(-3px); }
+.ghost { border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); background: none; }
 .ghost:hover { border-color: rgba(255,255,255,0.5); color: white; }
 
-/* ── STATS ── */
+/* STATS */
 .stats { background: #081520; }
 .stats-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
 .stat-card { background: #16293d; padding: 30px 40px; border-radius: 10px; transition: 0.3s; min-width: 140px; }
+.stat-card h2 { color: #42a5f5; }
 .stat-card:hover { transform: translateY(-6px) scale(1.05); background: #1e3f5f; }
 
-/* ── PLATFORMS ── */
+/* PLATFORMS */
 .platforms { background: #102b44; color: white; }
 .platform-grid { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-.platform { background: #16293d; padding: 14px 22px; border-radius: 12px; font-size: clamp(14px, 3vw, 18px); transition: 0.3s; }
+.platform { background: #16293d; padding: 14px 22px; border-radius: 12px; font-size: clamp(14px, 3vw, 18px); transition: 0.3s; color: #fff; }
 .platform:hover { transform: translateY(-6px); background: #1e3f5f; }
 
-/* ── TECH ── */
+/* TECH */
 .tech { background: #102b44; color: white; }
 .tech-icons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-.tech-card { background: #16293d; padding: 16px 24px; border-radius: 10px; transition: 0.3s; font-size: clamp(13px, 3vw, 16px); }
+.tech-card { background: #16293d; padding: 16px 24px; border-radius: 10px; transition: 0.3s; font-size: clamp(13px, 3vw, 16px); color: #fff; }
 .tech-card:hover { transform: translateY(-5px); background: #1d3a57; }
 
-/* ── OVERVIEW ── */
-.overview { background: #0b1c2c; color: white; }
-.overview p { max-width: 700px; margin: auto; line-height: 1.7; }
+/* OVERVIEW */
+.overview { background: #0b1c2c; }
+.overview p { max-width: 700px; margin: auto; line-height: 1.7; color: rgba(255,255,255,0.7); }
 
-/* ── ADVANTAGES ── */
-.advantages { background: #102b44; color: white; }
+/* ADVANTAGES */
+.advantages { background: #102b44; }
 .adv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
 .adv-card { background: #16293d; padding: 28px; border-radius: 12px; transition: 0.3s; }
+.adv-card h3 { color: #42a5f5; margin-bottom: 10px; }
+.adv-card p { color: rgba(255,255,255,0.65); }
 .adv-card:hover { transform: translateY(-6px); background: #1e3f5f; }
 
-/* ── WORKFLOW ── */
-.workflow { background: #0b1c2c; color: white; }
+/* WORKFLOW */
+.workflow { background: #0b1c2c; }
 .steps { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
 .step { background: #16293d; padding: 25px; border-radius: 10px; width: clamp(140px, 40vw, 200px); transition: 0.3s; }
 .step:hover { transform: translateY(-6px); }
-.step span { font-size: 30px; font-weight: bold; }
+.step span { font-size: 30px; font-weight: bold; color: #42a5f5; display: block; margin-bottom: 8px; }
+.step p { color: rgba(255,255,255,0.7); }
 
-/* ── PREVIEW ── */
-.preview { background: #102b44; color: white; }
+/* PREVIEW */
+.preview { background: #102b44; }
 .preview-box {
   margin-top: 40px; background: #0b1c2c; padding: 16px;
   border-radius: 15px; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
@@ -210,11 +184,11 @@ p { color: #cbd5e1; }
 .preview-img { width: 900px; max-width: 100%; border-radius: 10px; display: block; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-/* ── CTA ── */
-.cta { background: linear-gradient(180deg, #0b1c2c, #081520); color: white; }
+/* CTA */
+.cta { background: linear-gradient(180deg, #0b1c2c, #081520); }
 .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
 
-/* ── MOBILE ── */
+/* MOBILE */
 @media (max-width: 600px) {
   section { padding: 80px 16px; }
   .hero { padding: 88px 16px 60px; }

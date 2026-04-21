@@ -10,25 +10,49 @@
       <div class="team-grid">
         <!-- Mohamed Bendary -->
         <div class="team-card">
-          <div class="card-image">
-            <div class="avatar">MB</div>
-            <div class="social-links">
-              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-              <a href="#" target="_blank"><i class="fas fa-envelope"></i></a>
-            </div>
-          </div>
-          <div class="card-info">
-            <h3>Mohamed Bendary</h3>
-            <span class="role">Backend Developer</span>
-            <p>Responsible for server-side logic, database management, and API development</p>
-            <div class="skills">
-              <span>Django</span>
-              <span>Python</span>
-              <span>Database</span>
-            </div>
-          </div>
-        </div>
+  <div class="card-image">
+    <img src="../assets/mohamed.jpg" alt="Mohamed Bendary" class="avatar-img">
+    <div class="social-links">
+      <a href="https://github.com/MohamedBendari"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/mohamed-bendary-6778922ba?utm_source=share&utm_campaign
+      =share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:mohamedsharkawy078@gmail.com">
+  <i class="fas fa-envelope"></i>
+</a>
+    </div>
+  </div>
+
+  <div class="card-info">
+    <h3>Mohamed Bendary</h3>
+
+    <span class="role fullstack">Full Stack Developer</span>
+
+    <p>
+      Building modern web applications using Django & Python for backend 
+      and creating responsive, user-friendly interfaces for frontend.
+    </p>
+
+    <!-- 🔵 Frontend -->
+    <div class="skills-section">
+      <div class="skills frontend">
+        <span><i class="fab fa-html5"></i> HTML</span>
+        <span><i class="fab fa-css3-alt"></i> CSS</span>
+        <span><i class="fab fa-js"></i> JavaScript</span>
+        <span><i class="fab fa-vuejs"></i> Vue</span>
+      </div>
+    </div>
+
+    <!-- 🟢 Backend -->
+    <div class="skills-section">
+      <div class="skills backend">
+        <span><i class="fas fa-server"></i> Django</span>
+        <span><i class="fab fa-python"></i> Python</span>
+        <span><i class="fas fa-database"></i> Database</span>
+      </div>
+    </div>
+
+  </div>
+</div>
 
         <!-- Mohamed Ehab -->
         <div class="team-card">
@@ -74,33 +98,146 @@
           </div>
         </div>
 
-        <!-- Youssef (Logo Designer) -->
-        <div class="team-card">
-          <div class="card-image">
-            <div class="avatar" style="background: linear-gradient(135deg, #ff9800, #f57c00);">Y</div>
-            <div class="social-links">
-              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-              <a href="#" target="_blank"><i class="fas fa-envelope"></i></a>
-            </div>
-          </div>
-          <div class="card-info">
-            <h3>Youssef</h3>
-            <span class="role">UI Designer & Logo Creator</span>
-            <p>Created the ANCS brand identity and visual design system</p>
-            <div class="skills">
-              <span>Logo Design</span>
-              <span>Branding</span>
-              <span>UI Design</span>
-            </div>
-          </div>
-        </div>
+        
+        <!-- Youssef Samir -->
+<div class="team-card">
+  <div class="card-image">
+        <img src="../assets/youssefsamir.jpg" alt="youssefsamir" class="avatar-img">
+
+    <div class="social-links">
+      <a href="https://github.com/youssefsamir14"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/youssef-samir-b12320292/"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:yousefsamir2004@gmail.com">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="card-info">
+    <h3>Youssef Samir</h3>
+
+    <span class="role backend">Python Developer</span>
+
+    <p>
+      Python developer specialized in building desktop applications, 
+      working with GUI frameworks, system communication, and network automation tools.
+    </p>
+
+    <!-- 🟢 Skills -->
+    <div class="skills-section">
+      <div class="skills backend">
+        <span><i class="fab fa-python"></i> Python 3.7+</span>
+        <span><i class="fas fa-desktop"></i> PySide (GUI)</span>
+        <span><i class="fas fa-network-wired"></i> Paramiko (SSH)</span>
+        <span><i class="fas fa-plug"></i> PySerial (Serial)</span>
+        <span><i class="fas fa-code"></i> Requests (API)</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Aliaa Sabry Mahmoud Mohamed -->
+<div class="team-card">
+  <div class="card-image">
+    <img src="C:\Users\MODY\Desktop\ANCS-website-main\src\assets\Aliaa Sabry.jpg" alt="Aliaa Sabry" class="avatar-img">
+    <div class="social-links">
+      <a href="https://github.com/aliaammm050-cell"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/aliaa-sabry-08272a404"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:aliaammm050@gmail.com">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="card-info">
+    <h3>Aliaa Sabry</h3>
+
+    <span class="role frontend">Frontend Developer</span>
+
+    <p>
+      Frontend developer passionate about creating clean, responsive, 
+      and user-friendly web interfaces using modern web technologies.
+    </p>
+
+    <!-- 🔵 Frontend Skills -->
+    <div class="skills-section">
+      <div class="skills frontend">
+        <span><i class="fab fa-html5"></i> HTML</span>
+        <span><i class="fab fa-css3-alt"></i> CSS</span>
+        <span><i class="fab fa-js"></i> JavaScript</span>
+        <span><i class="fas fa-mobile-alt"></i> Responsive Design</span>
+      </div>
+    </div>
+
+  </div>
+</div>
       </div>
     </div>
   </section>
 </template>
 
 <style scoped>
+
+
+/* Role */
+.role.fullstack {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #30bee6, #17447e);
+  color: white;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+/* Sections */
+.skills-section {
+  margin-top: 15px;
+}
+
+.skills-section h4 {
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 8px;
+}
+
+/* Skills base */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Frontend */
+.skills.frontend span {
+  background: rgba(0, 150, 255, 0.1);
+  border: 1px solid rgba(0, 150, 255, 0.3);
+  color: #00aaff;
+}
+
+/* Backend */
+.skills.backend span {
+  background: rgba(0, 255, 150, 0.1);
+  border: 1px solid rgba(0, 255, 150, 0.3);
+  color: #00d084;
+}
+
+/* Skill item */
+.skills span {
+  padding: 6px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Hover effect 🔥 */
+.team-card:hover {
+  transform: translateY(-8px);
+  transition: 0.3s;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
 .team {
   min-height: 100vh;
   padding: 120px 20px 80px;
@@ -193,6 +330,18 @@
   color: white;
   border: 4px solid rgba(255, 255, 255, 0.1);
   transition: all 0.4s ease;
+}
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0; /* مهم */
+}
+
+.card-image {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
 }
 
 .team-card:hover .avatar {
@@ -337,4 +486,7 @@
     font-size: 12px;
   }
 }
+
+
+
 </style>

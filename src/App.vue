@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :data-theme="themeStore.theme">
 
     <!-- ===== NAVBAR ===== -->
     <nav v-if="showLayout" class="navbar" :class="{ 'scrolled': isScrolled }">
@@ -22,9 +22,18 @@
 
         <!-- Desktop Actions -->
         <div class="nav-actions">
+          <!-- Theme Toggle -->
+          <button class="btn-theme" @click="themeStore.toggle()" :title="themeStore.isDark ? 'Light Mode' : 'Dark Mode'">
+            <i :class="themeStore.isDark ? 'fas fa-sun' : 'fas fa-moon'"></i>
+          </button>
+
           <template v-if="!isLoggedIn">
             <button class="btn-login" @click="openAuth('login')">Login</button>
             <button class="btn-signup" @click="openAuth('signup')">Sign Up</button>
+            <!-- Admin Login -->
+            <router-link to="/login" class="btn-admin-login" title="Admin Login">
+              <i class="fas fa-shield-alt"></i> Admin
+            </router-link>
             <router-link to="/download" class="btn-download">
               <i class="fas fa-download"></i> Download
             </router-link>
@@ -49,11 +58,8 @@
 
         <!-- Mobile Toggle -->
         <button class="mobile-toggle" @click="toggleMenu" :class="{ 'active': isMenuOpen }" aria-label="Toggle menu">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span><span></span>
         </button>
-
       </div>
 
       <!-- Mobile Menu -->
@@ -64,9 +70,17 @@
         <router-link to="/team" @click="closeMenu">Team</router-link>
         <router-link to="/contact" @click="closeMenu">Contact</router-link>
         <div class="mobile-actions">
+          <!-- Theme toggle mobile -->
+          <button class="mobile-theme-btn" @click="themeStore.toggle()">
+            <i :class="themeStore.isDark ? 'fas fa-sun' : 'fas fa-moon'"></i>
+            {{ themeStore.isDark ? 'Light Mode' : 'Dark Mode' }}
+          </button>
           <template v-if="!isLoggedIn">
             <button @click="openAuth('login'); closeMenu()">Login</button>
             <button @click="openAuth('signup'); closeMenu()">Sign Up</button>
+            <router-link to="/login" class="mobile-admin-btn" @click="closeMenu">
+              <i class="fas fa-shield-alt"></i> Admin Login
+            </router-link>
           </template>
           <template v-else>
             <template v-if="authStore.isAdmin">
@@ -89,10 +103,7 @@
     <Transition name="modal-fade">
       <div v-if="showLayout && showAuthModal" class="modal-overlay" @click.self="closeAuth">
         <div class="auth-modal">
-
-          <button class="close-btn" @click="closeAuth" aria-label="Close">
-            <i class="fas fa-times"></i>
-          </button>
+          <button class="close-btn" @click="closeAuth"><i class="fas fa-times"></i></button>
 
           <div class="modal-tabs">
             <button :class="{ active: isLogin }" @click="isLogin = true; resetStatus()">Login</button>
@@ -173,7 +184,6 @@
             </button>
             <p class="switch-text">Already have an account? <button @click="isLogin = true; resetStatus()">Login</button></p>
           </div>
-
         </div>
       </div>
     </Transition>
@@ -224,26 +234,24 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from './stores/auth'
+import { useThemeStore } from './stores/theme'
 
-const router    = useRouter()
-const route     = useRoute()
-const authStore = useAuthStore()
+const router     = useRouter()
+const route      = useRoute()
+const authStore  = useAuthStore()
+const themeStore = useThemeStore()
 
-// ── Layout visibility ──
 const showLayout = computed(() => !route.meta.hideLayout)
 
-// ── Navbar ──
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 const closeMenu  = () => { isMenuOpen.value = false }
 const handleScroll = () => { isScrolled.value = window.scrollY > 50 }
-onMounted(()  => window.addEventListener('scroll', handleScroll))
+onMounted(()  => { window.addEventListener('scroll', handleScroll); themeStore.applyTheme() })
 onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 
-// ── Auth state ──
-const isLoggedIn = computed(() => authStore.isLoggedIn)
-
+const isLoggedIn    = computed(() => authStore.isLoggedIn)
 const showAuthModal = ref(false)
 const isLogin       = ref(true)
 const showPassword  = ref(false)
@@ -285,9 +293,7 @@ const handleLogin = async () => {
     if (!res.ok) throw new Error(data.error || data.detail || 'Invalid credentials')
     authStore.loginSuccess(data.access, data.username, data.role)
     closeAuth()
-    if (data.role === 'admin') {
-      router.push('/dashboard')
-    }
+    if (data.role === 'admin') router.push('/dashboard')
   } catch (err) {
     authStatus.value = { type: 'error', message: err.message || 'Login failed.' }
   } finally {
@@ -323,40 +329,65 @@ const handleSignup = async () => {
   }
 }
 
-const logout = () => {
-  authStore.logout()
-  router.push('/')
-}
+const logout = () => { authStore.logout(); router.push('/') }
 </script>
 
 <style>
-/* base.css handles reset, fonts, body, #app */
+/* ── THEME VARIABLES ── */
+:root, [data-theme="dark"] {
+  --nav-bg:        rgba(11,28,44,0.7);
+  --nav-bg-scroll: rgba(11,28,44,0.97);
+  --body-bg:       #0b1c2c;
+  --text-primary:  #e8edf2;
+  --text-muted:    rgba(255,255,255,0.6);
+  --border-color:  rgba(255,255,255,0.07);
+  --card-bg:       rgba(255,255,255,0.04);
+  --footer-bg:     #060f18;
+  --modal-bg:      linear-gradient(145deg, #16293d, #0f1f30);
+  --input-bg:      rgba(255,255,255,0.05);
+  --input-border:  rgba(255,255,255,0.1);
+  --input-color:   #fff;
+  --placeholder:   rgba(255,255,255,0.25);
+}
+
+[data-theme="light"] {
+  --nav-bg:        rgba(255,255,255,0.85);
+  --nav-bg-scroll: rgba(255,255,255,0.98);
+  --body-bg:       #f0f5fa;
+  --text-primary:  #1a2537;
+  --text-muted:    #4a5568;
+  --border-color:  rgba(0,0,0,0.09);
+  --card-bg:       #ffffff;
+  --footer-bg:     #1a2537;
+  --modal-bg:      linear-gradient(145deg, #ffffff, #f0f5fa);
+  --input-bg:      rgba(0,0,0,0.04);
+  --input-border:  rgba(0,0,0,0.12);
+  --input-color:   #1a2537;
+  --placeholder:   rgba(0,0,0,0.3);
+}
+
+body {
+  background: var(--body-bg);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
 /* NAVBAR */
 .navbar {
-  width: 100%;
-  position: fixed;
-  top: 0; left: 0;
-  z-index: 1000;
-  background: rgba(11, 28, 44, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-color);
   transition: all 0.4s ease;
 }
 .navbar.scrolled {
-  background: rgba(11, 28, 44, 0.97);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-  border-bottom-color: rgba(66, 165, 245, 0.15);
+  background: var(--nav-bg-scroll);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+  border-bottom-color: rgba(66,165,245,0.2);
 }
 .nav-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
+  max-width: 1400px; margin: 0 auto; height: 72px;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
 }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
 .logo img { width: 38px; height: 38px; border-radius: 10px; object-fit: contain; }
@@ -367,26 +398,46 @@ const logout = () => {
 }
 .nav-links { display: flex; align-items: center; gap: 4px; }
 .nav-links a {
-  color: rgba(255,255,255,0.75); text-decoration: none;
+  color: var(--text-muted); text-decoration: none;
   font-size: 14.5px; font-weight: 500;
   padding: 6px 14px; border-radius: 8px; transition: all 0.25s ease;
 }
-.nav-links a:hover { color: #fff; background: rgba(66, 165, 245, 0.12); }
-.nav-links a.router-link-exact-active { color: #42a5f5; background: rgba(66, 165, 245, 0.1); }
+.nav-links a:hover { color: var(--text-primary); background: rgba(66,165,245,0.12); }
+.nav-links a.router-link-exact-active { color: #42a5f5; background: rgba(66,165,245,0.1); }
 
-.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+.btn-theme {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--input-bg); border: 1px solid var(--border-color);
+  color: var(--text-muted); font-size: 15px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s; flex-shrink: 0;
+}
+.btn-theme:hover { background: rgba(66,165,245,0.15); color: #42a5f5; border-color: #42a5f5; }
+
 .btn-login {
-  background: none; border: none; color: rgba(255,255,255,0.85);
+  background: none; border: none; color: var(--text-muted);
   font-size: 14px; font-weight: 500; cursor: pointer;
   padding: 8px 16px; border-radius: 8px; transition: all 0.25s; font-family: inherit;
 }
-.btn-login:hover { color: #fff; background: rgba(255,255,255,0.07); }
+.btn-login:hover { color: var(--text-primary); background: var(--input-bg); }
+
 .btn-signup {
-  background: rgba(66, 165, 245, 0.1); border: 1px solid rgba(66, 165, 245, 0.4);
+  background: rgba(66,165,245,0.1); border: 1px solid rgba(66,165,245,0.4);
   color: #42a5f5; font-size: 14px; font-weight: 600; cursor: pointer;
   padding: 8px 18px; border-radius: 8px; transition: all 0.25s; font-family: inherit;
 }
-.btn-signup:hover { background: #42a5f5; color: #fff; box-shadow: 0 0 20px rgba(66,165,245,0.3); }
+.btn-signup:hover { background: #42a5f5; color: #fff; }
+
+.btn-admin-login {
+  background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25);
+  color: #f87171; text-decoration: none; font-size: 13px; font-weight: 600;
+  padding: 7px 14px; border-radius: 8px; transition: all 0.25s;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-admin-login:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+
 .btn-download {
   background: linear-gradient(135deg, #0077b6, #0096c7);
   color: #fff; text-decoration: none; font-size: 14px; font-weight: 600;
@@ -394,15 +445,17 @@ const logout = () => {
   display: flex; align-items: center; gap: 7px;
 }
 .btn-download:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,119,182,0.4); }
+
 .btn-dashboard {
-  background: rgba(66, 165, 245, 0.1); border: 1px solid rgba(66, 165, 245, 0.3);
+  background: rgba(66,165,245,0.1); border: 1px solid rgba(66,165,245,0.3);
   color: #42a5f5; text-decoration: none; font-size: 14px; font-weight: 600;
   padding: 8px 16px; border-radius: 8px; transition: all 0.25s;
   display: flex; align-items: center; gap: 7px;
 }
 .btn-dashboard:hover { background: #42a5f5; color: #fff; }
+
 .btn-logout {
-  background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
   color: #ef4444; font-size: 14px; font-weight: 500; cursor: pointer;
   padding: 8px 16px; border-radius: 8px; transition: all 0.25s; font-family: inherit;
 }
@@ -413,8 +466,7 @@ const logout = () => {
   background: linear-gradient(135deg, #42a5f5, #0077b6);
   color: #fff; font-size: 15px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
-  cursor: default; border: 2px solid rgba(66,165,245,0.4);
-  flex-shrink: 0;
+  cursor: default; border: 2px solid rgba(66,165,245,0.4); flex-shrink: 0;
 }
 .mobile-user-info {
   display: flex; align-items: center; gap: 12px;
@@ -431,11 +483,10 @@ const logout = () => {
 
 .mobile-toggle {
   display: none; flex-direction: column; justify-content: center;
-  gap: 5px; background: none; border: none; cursor: pointer;
-  padding: 6px; width: 38px; height: 38px;
+  gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; width: 38px; height: 38px;
 }
 .mobile-toggle span {
-  width: 22px; height: 2px; background: rgba(255,255,255,0.85);
+  width: 22px; height: 2px; background: var(--text-muted);
   border-radius: 2px; transition: all 0.3s ease; transform-origin: center;
 }
 .mobile-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
@@ -445,105 +496,103 @@ const logout = () => {
 .mobile-menu {
   display: none; flex-direction: column;
   padding: 16px 24px 24px; gap: 4px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  background: rgba(11, 28, 44, 0.98);
+  border-top: 1px solid var(--border-color);
+  background: var(--nav-bg-scroll);
   transform: translateY(-10px); opacity: 0;
   pointer-events: none; transition: all 0.3s ease;
 }
 .mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: all; }
 .mobile-menu a {
-  color: rgba(255,255,255,0.8); text-decoration: none;
+  color: var(--text-muted); text-decoration: none;
   font-size: 16px; font-weight: 500;
   padding: 12px 16px; border-radius: 10px; transition: all 0.2s;
 }
-.mobile-menu a:hover, .mobile-menu a.router-link-active { color: #fff; background: rgba(66, 165, 245, 0.1); }
-.mobile-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
+.mobile-menu a:hover, .mobile-menu a.router-link-active { color: var(--text-primary); background: rgba(66,165,245,0.1); }
+.mobile-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; padding-top: 16px; border-top: 1px solid var(--border-color); }
 .mobile-actions button {
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  color: white; font-size: 15px; font-weight: 500;
+  background: var(--input-bg); border: 1px solid var(--border-color);
+  color: var(--text-primary); font-size: 15px; font-weight: 500;
   padding: 12px; border-radius: 10px; cursor: pointer; font-family: inherit; transition: all 0.25s;
 }
-.mobile-actions button:hover { background: rgba(66, 165, 245, 0.15); border-color: #42a5f5; color: #42a5f5; }
+.mobile-actions button:hover { background: rgba(66,165,245,0.15); border-color: #42a5f5; color: #42a5f5; }
+.mobile-theme-btn { display: flex !important; align-items: center; gap: 10px; }
+.mobile-admin-btn {
+  background: rgba(239,68,68,0.08) !important; border: 1px solid rgba(239,68,68,0.2) !important;
+  color: #f87171 !important; text-decoration: none;
+  font-size: 15px; font-weight: 600; padding: 12px 16px !important;
+  border-radius: 10px; display: flex; align-items: center; gap: 8px; transition: all 0.25s;
+}
 .mobile-download {
   background: linear-gradient(135deg, #0077b6, #0096c7) !important;
   color: #fff !important; text-align: center;
   padding: 12px !important; border-radius: 10px; font-weight: 600 !important;
+  text-decoration: none; display: block;
 }
 
 /* AUTH MODAL */
 .modal-overlay {
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 2000; padding: 20px;
+  display: flex; align-items: center; justify-content: center; z-index: 2000; padding: 20px;
 }
 .auth-modal {
-  background: linear-gradient(145deg, #16293d, #0f1f30);
+  background: var(--modal-bg);
   width: 100%; max-width: 440px;
   border-radius: 28px; padding: 40px; position: relative;
-  border: 1px solid rgba(66, 165, 245, 0.15);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+  border: 1px solid rgba(66,165,245,0.15);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
 }
 .close-btn {
   position: absolute; top: 18px; right: 18px;
-  width: 36px; height: 36px;
-  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 10px; color: rgba(255,255,255,0.7); cursor: pointer;
-  font-size: 14px; transition: all 0.2s;
-  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; background: var(--input-bg); border: 1px solid var(--border-color);
+  border-radius: 10px; color: var(--text-muted); cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
 }
-.close-btn:hover { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; color: #ef4444; }
+.close-btn:hover { background: rgba(239,68,68,0.2); border-color: #ef4444; color: #ef4444; }
 .modal-tabs {
-  display: flex; background: rgba(0,0,0,0.25);
-  border-radius: 14px; padding: 5px; margin-bottom: 32px;
-  border: 1px solid rgba(255,255,255,0.06);
+  display: flex; background: var(--input-bg);
+  border-radius: 14px; padding: 5px; margin-bottom: 32px; border: 1px solid var(--border-color);
 }
 .modal-tabs button {
   flex: 1; padding: 11px; border: none; background: none;
-  color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 600;
+  color: var(--text-muted); font-size: 14px; font-weight: 600;
   cursor: pointer; border-radius: 10px; transition: all 0.25s; font-family: inherit;
 }
-.modal-tabs button.active { background: #42a5f5; color: #fff; box-shadow: 0 4px 15px rgba(66, 165, 245, 0.3); }
+.modal-tabs button.active { background: #42a5f5; color: #fff; }
 .form-header { margin-bottom: 28px; }
-.form-header h2 { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 6px; }
-.form-header p { font-size: 14px; color: rgba(255,255,255,0.5); }
+.form-header h2 { font-size: 26px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+.form-header p { font-size: 14px; color: var(--text-muted); }
 .form-group { margin-bottom: 18px; }
-.form-group label { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); margin-bottom: 8px; letter-spacing: 0.3px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
 .input-wrap { position: relative; display: flex; align-items: center; }
-.input-wrap > i:first-child { position: absolute; left: 15px; color: rgba(255,255,255,0.3); font-size: 14px; pointer-events: none; }
+.input-wrap > i:first-child { position: absolute; left: 15px; color: var(--text-muted); font-size: 14px; pointer-events: none; opacity: 0.5; }
 .input-wrap input {
   width: 100%; padding: 13px 44px 13px 40px;
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px; color: #fff; font-size: 14.5px;
-  transition: all 0.25s; font-family: inherit;
+  background: var(--input-bg); border: 1px solid var(--input-border);
+  border-radius: 12px; color: var(--input-color); font-size: 14.5px; transition: all 0.25s; font-family: inherit;
 }
-.input-wrap input::placeholder { color: rgba(255,255,255,0.25); }
-.input-wrap input:focus {
-  outline: none; border-color: #42a5f5;
-  background: rgba(66, 165, 245, 0.05);
-  box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.12);
-}
-.toggle-pass { position: absolute; right: 14px; background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer; font-size: 14px; padding: 4px; transition: color 0.2s; }
-.toggle-pass:hover { color: rgba(255,255,255,0.7); }
+.input-wrap input::placeholder { color: var(--placeholder); }
+.input-wrap input:focus { outline: none; border-color: #42a5f5; box-shadow: 0 0 0 3px rgba(66,165,245,0.12); }
+.toggle-pass { position: absolute; right: 14px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; padding: 4px; opacity: 0.5; }
+.toggle-pass:hover { opacity: 1; }
 .status-msg { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 12px 16px; border-radius: 10px; margin-bottom: 16px; }
-.status-msg.error { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); color: #fca5a5; }
-.status-msg.success { background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.25); color: #86efac; }
+.status-msg.error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; }
+.status-msg.success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
 .submit-btn {
   width: 100%; padding: 14px;
   background: linear-gradient(135deg, #42a5f5, #0077b6);
   border: none; border-radius: 12px; color: #fff;
   font-size: 15px; font-weight: 700; cursor: pointer;
-  transition: all 0.3s; font-family: inherit; letter-spacing: 0.3px; margin-bottom: 20px;
+  transition: all 0.3s; font-family: inherit; margin-bottom: 20px;
 }
-.submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 119, 182, 0.4); }
+.submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,119,182,0.4); }
 .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 .submit-btn.signup { background: linear-gradient(135deg, #0077b6, #005f8f); }
-.switch-text { text-align: center; font-size: 13px; color: rgba(255,255,255,0.45); }
+.switch-text { text-align: center; font-size: 13px; color: var(--text-muted); }
 .switch-text button { background: none; border: none; color: #42a5f5; cursor: pointer; font-weight: 600; font-size: 13px; font-family: inherit; margin-left: 4px; }
-.switch-text button:hover { text-decoration: underline; }
 
 /* FOOTER */
-.footer { background: #060f18; border-top: 1px solid rgba(255,255,255,0.06); padding: 60px 40px 0; margin-top: auto; }
+.footer { background: var(--footer-bg); border-top: 1px solid var(--border-color); padding: 60px 40px 0; margin-top: auto; }
 .footer-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; gap: 60px; flex-wrap: wrap; padding-bottom: 50px; }
 .footer-brand { display: flex; flex-direction: column; gap: 10px; max-width: 260px; }
 .footer-brand img { width: 42px; border-radius: 10px; }

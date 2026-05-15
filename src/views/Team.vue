@@ -6,7 +6,6 @@
         <h1>Meet The Developers</h1>
         <p>The talented people behind ANCS who made it all possible</p>
       </div>
-
       <div class="team-grid">
         <!-- Mohamed Bendary -->
         <div class="team-card">
@@ -21,17 +20,13 @@
 </a>
     </div>
   </div>
-
   <div class="card-info">
     <h3>Mohamed Bendary</h3>
-
     <span class="role fullstack">Full Stack Developer</span>
-
     <p>
       Building modern web applications using Django & Python for backend 
       and creating responsive, user-friendly interfaces for frontend.
     </p>
-
     <!-- 🔵 Frontend -->
     <div class="skills-section">
       <div class="skills frontend">
@@ -41,7 +36,6 @@
         <span><i class="fab fa-vuejs"></i> Vue</span>
       </div>
     </div>
-
     <!-- 🟢 Backend -->
     <div class="skills-section">
       <div class="skills backend">
@@ -50,10 +44,8 @@
         <span><i class="fas fa-database"></i> Database</span>
       </div>
     </div>
-
   </div>
 </div>
-
         <!-- Mohamed Ehab -->
         <div class="team-card">
           <div class="card-image">
@@ -75,7 +67,6 @@
             </div>
           </div>
         </div>
-
         <!-- Zyad -->
         <div class="team-card">
           <div class="card-image">
@@ -97,13 +88,10 @@
             </div>
           </div>
         </div>
-
-        
         <!-- Youssef Samir -->
 <div class="team-card">
   <div class="card-image">
         <img src="../assets/youssefsamir.jpg" alt="youssefsamir" class="avatar-img">
-
     <div class="social-links">
       <a href="https://github.com/youssefsamir14"><i class="fab fa-github"></i></a>
       <a href="https://www.linkedin.com/in/youssef-samir-b12320292/"><i class="fab fa-linkedin"></i></a>
@@ -112,17 +100,13 @@
       </a>
     </div>
   </div>
-
   <div class="card-info">
     <h3>Youssef Samir</h3>
-
     <span class="role backend">Python Developer</span>
-
     <p>
       Python developer specialized in building desktop applications, 
       working with GUI frameworks, system communication, and network automation tools.
     </p>
-
     <!-- 🟢 Skills -->
     <div class="skills-section">
       <div class="skills backend">
@@ -131,6 +115,56 @@
         <span><i class="fas fa-network-wired"></i> Paramiko (SSH)</span>
         <span><i class="fas fa-plug"></i> PySerial (Serial)</span>
         <span><i class="fas fa-code"></i> Requests (API)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ahmed Abdelkarim -->
+<div class="team-card">
+  <div class="card-image">
+    <img src="../assets/Ahmed Mahmoud.jpg" alt="Ahmed Abdelkarim" class="avatar-img">
+
+    <div class="social-links">
+
+      <a href="https://github.com/ahmaadmahmouud394-hub" target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+
+      <a href="https://www.linkedin.com/in/ahmed-abdelkarim-5ab1681b9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank">
+        <i class="fab fa-linkedin"></i>
+      </a>
+
+      <a href="mailto:ahmaadmahmouud394@gmail.com">
+        <i class="fas fa-envelope"></i>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="card-info">
+    <h3>Ahmed Abdelkarim</h3>
+
+    <span class="role fullstack">Network Automation & QA Engineer</span>
+
+    <p>
+      Developed and implemented automated testing and network validation systems
+      for ANCS, focusing on secure protocol automation, configuration parsing,
+      and GNS3-based network simulation environments.
+    </p>
+
+    <!-- 🟢 Skills -->
+    <div class="skills-section">
+      <div class="skills backend">
+        <span><i class="fab fa-python"></i> Python 3.x</span>
+        <span><i class="fas fa-vial"></i> unittest</span>
+        <span><i class="fas fa-network-wired"></i> Paramiko</span>
+        <span><i class="fas fa-terminal"></i> Telnetlib3</span>
+        <span><i class="fas fa-plug"></i> PySerial</span>
+        <span><i class="fas fa-desktop"></i> PySide6</span>
+        <span><i class="fas fa-project-diagram"></i> GNS3 API</span>
+        <span><i class="fas fa-robot"></i> Gemini AI API</span>
+        <span><i class="fas fa-database"></i> SQLite</span>
       </div>
     </div>
 
@@ -148,17 +182,13 @@
       </a>
     </div>
   </div>
-
   <div class="card-info">
     <h3>Aliaa Sabry</h3>
-
     <span class="role frontend">Frontend Developer</span>
-
     <p>
       Frontend developer passionate about creating clean, responsive, 
       and user-friendly web interfaces using modern web technologies.
     </p>
-
     <!-- 🔵 Frontend Skills -->
     <div class="skills-section">
       <div class="skills frontend">
@@ -168,7 +198,6 @@
         <span><i class="fas fa-mobile-alt"></i> Responsive Design</span>
       </div>
     </div>
-
   </div>
 </div>
       </div>
@@ -177,51 +206,43 @@
 </template>
 
 <style scoped>
-
-
 /* Role */
 .role.fullstack {
   display: inline-block;
   padding: 6px 14px;
   border-radius: 20px;
   background: linear-gradient(135deg, #30bee6, #17447e);
-  color: white;
+  color: var(--text-primary);
   font-size: 12px;
   margin-bottom: 10px;
 }
-
 /* Sections */
 .skills-section {
   margin-top: 15px;
 }
-
 .skills-section h4 {
   font-size: 13px;
   color: #aaa;
   margin-bottom: 8px;
 }
-
 /* Skills base */
 .skills {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
-
 /* Frontend */
 .skills.frontend span {
   background: rgba(0, 150, 255, 0.1);
   border: 1px solid rgba(0, 150, 255, 0.3);
   color: #00aaff;
 }
-
 /* Backend */
 .skills.backend span {
   background: rgba(0, 255, 150, 0.1);
   border: 1px solid rgba(0, 255, 150, 0.3);
   color: #00d084;
 }
-
 /* Skill item */
 .skills span {
   padding: 6px 10px;
@@ -231,7 +252,6 @@
   align-items: center;
   gap: 5px;
 }
-
 /* Hover effect 🔥 */
 .team-card:hover {
   transform: translateY(-8px);
@@ -241,19 +261,16 @@
 .team {
   min-height: 100vh;
   padding: 120px 20px 80px;
-  background: linear-gradient(135deg, #0b1c2c 0%, #16293d 100%);
+  background: var(--page-bg-gradient);
 }
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
 }
-
 .section-header {
   text-align: center;
   margin-bottom: 80px;
 }
-
 .subtitle {
   display: inline-block;
   padding: 8px 20px;
@@ -267,46 +284,33 @@
   letter-spacing: 1px;
   margin-bottom: 20px;
 }
-
 .section-header h1 {
-  font-size: 56px;
-  font-weight: 800;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #ffffff, #42a5f5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: #fff;
+  color: var(--text-primary);
 }
-
 .section-header p {
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto;
 }
-
 .team-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
 }
-
 .team-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 24px;
   overflow: hidden;
   transition: all 0.4s ease;
 }
-
 .team-card:hover {
   transform: translateY(-10px);
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--card-bg-hover);
   border-color: rgba(66, 165, 245, 0.2);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
-
 .card-image {
   position: relative;
   height: 200px;
@@ -316,7 +320,6 @@
   justify-content: center;
   overflow: hidden;
 }
-
 .avatar {
   width: 100px;
   height: 100px;
@@ -327,7 +330,7 @@
   justify-content: center;
   font-size: 36px;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   border: 4px solid rgba(255, 255, 255, 0.1);
   transition: all 0.4s ease;
 }
@@ -337,18 +340,15 @@
   object-fit: cover;
   border-radius: 0; /* مهم */
 }
-
 .card-image {
   position: relative;
   height: 220px;
   overflow: hidden;
 }
-
 .team-card:hover .avatar {
   transform: scale(1.1);
   border-color: rgba(66, 165, 245, 0.5);
 }
-
 .social-links {
   position: absolute;
   bottom: -50px;
@@ -358,11 +358,9 @@
   gap: 15px;
   transition: all 0.4s ease;
 }
-
 .team-card:hover .social-links {
   bottom: 20px;
 }
-
 .social-links a {
   width: 40px;
   height: 40px;
@@ -372,29 +370,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text-primary);
   text-decoration: none;
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
-
 .social-links a:hover {
   background: #42a5f5;
   transform: translateY(-3px);
 }
-
 .card-info {
   padding: 30px;
   text-align: center;
 }
-
 .card-info h3 {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: white;
+  color: var(--text-primary);
 }
-
 .role {
   display: inline-block;
   padding: 6px 16px;
@@ -406,87 +400,69 @@
   font-weight: 600;
   margin-bottom: 15px;
 }
-
 .card-info > p {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 20px;
 }
-
 .skills {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
 }
-
 .skills span {
   padding: 5px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 20px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-muted);
 }
-
 /* Responsive */
 @media (max-width: 1200px) {
   .team-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
 @media (max-width: 768px) {
   .section-header h1 {
     font-size: 36px;
   }
-
   .team-grid {
     grid-template-columns: 1fr;
     max-width: 400px;
     margin: 0 auto;
   }
 }
-
 @media (max-width: 600px) {
   .team {
     padding: 90px 20px 60px;
   }
-
   .section-header {
     margin-bottom: 40px;
   }
-
   .section-header h1 {
     font-size: 28px;
   }
-
   .section-header p {
     font-size: 16px;
   }
-
   .team-grid {
     max-width: 100%;
   }
-
   .team-card {
     padding: 20px;
   }
-
   .team-card h3 {
     font-size: 16px;
   }
-
   .team-card p {
     font-size: 13px;
   }
-
   .member-role {
     font-size: 12px;
   }
 }
-
-
-
 </style>

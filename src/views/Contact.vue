@@ -1,4 +1,3 @@
-
 <template>
   <section class="contact">
     <div class="container">
@@ -6,7 +5,6 @@
         <h1>Get In Touch</h1>
         <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
       </div>
-
       <div class="contact-content">
         <div class="contact-info">
           <div class="info-card">
@@ -16,7 +14,6 @@
               mohamedsharkawy078@gmail.com
             </a>
           </div>
-
           <div class="info-card">
             <i class="fas fa-map-marker-alt"></i>
             <h3>Location</h3>
@@ -24,7 +21,6 @@
               Cairo, Egypt
             </a>
           </div>
-
           <div class="info-card">
             <i class="fab fa-github"></i>
             <h3>GitHub</h3>
@@ -33,7 +29,6 @@
             </a>
           </div>
         </div>
-
         <!-- لو مش logged in — gate -->
         <div v-if="!isLoggedIn" class="contact-gate">
           <div class="gate-icon"><i class="fas fa-lock"></i></div>
@@ -48,7 +43,6 @@
             </button>
           </div>
         </div>
-
         <form v-else class="contact-form" @submit.prevent="submitForm">
           <div class="form-group">
             <label for="name">Your Name</label>
@@ -61,7 +55,6 @@
               :disabled="isSubmitting"
             >
           </div>
-
           <div class="form-group">
             <label for="email">Email Address</label>
             <input 
@@ -73,7 +66,6 @@
               :disabled="isSubmitting"
             >
           </div>
-
           <div class="form-group">
             <label for="purpose">Inquiry Purpose</label>
             <select id="purpose" v-model="form.purpose" required :disabled="isSubmitting">
@@ -84,7 +76,6 @@
              <option value="partnership">Partnership</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="message">Message</label>
             <textarea 
@@ -96,7 +87,6 @@
               :disabled="isSubmitting"
             ></textarea>
           </div>
-
           <button type="submit" class="submit-btn" :disabled="isSubmitting">
             <span v-if="!isSubmitting">
               <i class="fas fa-paper-plane"></i>
@@ -107,7 +97,6 @@
               Sending...
             </span>
           </button>
-
           <div v-if="submitStatus" class="status-message" :class="submitStatus.type">
             <i :class="submitStatus.icon"></i>
             {{ submitStatus.message }}
@@ -117,30 +106,29 @@
     </div>
   </section>
 </template>
-
+⋮----
+<!-- لو مش logged in — gate -->
+⋮----
+{{ submitStatus.message }}
+⋮----
 <script setup>
 import { ref, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
-
 const emit = defineEmits(['open-auth'])
 const openAuth = (type) => emit('open-auth', type)
 const authStore = useAuthStore()
 const isLoggedIn = computed(() => authStore.isLoggedIn)
-
 const form = ref({
   name: '',
   email: '',
   purpose: '',
   message: ''
 })
-
 const isSubmitting = ref(false)
 const submitStatus = ref(null)
-
 const submitForm = async () => {
   isSubmitting.value = true
   submitStatus.value = null
-
   try {
     const response = await fetch('http://127.0.0.1:8000/api/messages/', {
   method: 'POST',
@@ -149,9 +137,7 @@ const submitForm = async () => {
   },
   body: JSON.stringify(form.value)
 })
-
     const data = await response.json()
-
     if (response.ok) {
       submitStatus.value = {
         type: 'success',
@@ -174,24 +160,21 @@ const submitForm = async () => {
   }
 }
 </script>
-
+⋮----
 <style scoped>
 .contact {
   min-height: 100vh;
   padding: 120px 20px 60px;
-  background: linear-gradient(135deg, #0b1c2c 0%, #16293d 100%);
+  background: var(--page-bg-gradient);
 }
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
 }
-
 .contact-header {
   text-align: center;
   margin-bottom: 60px;
 }
-
 .contact-header h1 {
   font-size: 48px;
   font-weight: 700;
@@ -200,69 +183,59 @@ const submitForm = async () => {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: #fff;
+  color: var(--text-primary);
 }
-
 .contact-header p {
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto;
 }
-
 .contact-content {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 60px;
   align-items: start;
 }
-
 .contact-info {
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
-
 .info-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg);
   padding: 30px;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
   transition: all 0.3s ease;
 }
-
 .info-card:hover {
   transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--card-bg-hover);
   border-color: rgba(66, 165, 245, 0.3);
 }
-
 .info-card i {
   font-size: 32px;
   color: #42a5f5;
   margin-bottom: 15px;
 }
-
 .info-card h3 {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: white;
+  color: var(--text-primary);
 }
-
 .info-card a {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
   text-decoration: none;
   transition: color 0.3s ease;
 }
-
 .info-card a:hover {
   color: #42a5f5;
 }
-
 .contact-gate {
-  background: rgba(255,255,255,0.03);
+  background: var(--card-bg);
   border: 1px solid rgba(66,165,245,0.15);
   border-radius: 20px;
   padding: 50px 40px;
@@ -280,8 +253,8 @@ const submitForm = async () => {
   font-size: 28px; color: #42a5f5;
   margin-bottom: 8px;
 }
-.contact-gate h3 { font-size: 22px; color: #fff; font-weight: 700; }
-.contact-gate p { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 360px; }
+.contact-gate h3 { font-size: 22px; color: var(--text-primary); font-weight: 700; }
+.contact-gate p { font-size: 15px; color: var(--text-secondary); max-width: 360px; }
 .gate-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
 .gate-btn {
   padding: 12px 28px; border-radius: 10px;
@@ -289,22 +262,19 @@ const submitForm = async () => {
   font-family: inherit; display: flex; align-items: center; gap: 8px;
   transition: all 0.25s; border: none;
 }
-.gate-btn.primary { background: linear-gradient(135deg, #42a5f5, #0077b6); color: #fff; }
+.gate-btn.primary { background: linear-gradient(135deg, #42a5f5, #0077b6); color: var(--text-primary); }
 .gate-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,119,182,0.4); }
 .gate-btn.secondary { background: rgba(66,165,245,0.1); border: 1px solid rgba(66,165,245,0.3); color: #42a5f5; }
 .gate-btn.secondary:hover { background: rgba(66,165,245,0.2); }
-
 .contact-form {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg);
   padding: 40px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
 }
-
 .form-group {
   margin-bottom: 25px;
 }
-
 .form-group label {
   display: block;
   margin-bottom: 8px;
@@ -312,39 +282,35 @@ const submitForm = async () => {
   font-weight: 500;
   color: rgba(255, 255, 255, 0.9);
 }
-
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
   padding: 14px 18px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
-  color: white;
+  color: var(--text-primary);
   font-size: 15px;
   transition: all 0.3s ease;
   font-family: inherit;
 }
-
 .form-group select option {
-  background: #16293d;
-  color: white;
+  background: var(--card-bg-solid);
+  color: var(--text-primary);
 }
-
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
   border-color: #42a5f5;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--card-bg-hover);
 }
-
 .submit-btn {
   width: 100%;
   padding: 16px;
   background: linear-gradient(135deg, #0077b6, #0096c7);
-  color: white;
+  color: var(--text-primary);
   border: none;
   border-radius: 10px;
   font-size: 16px;
@@ -356,17 +322,14 @@ const submitForm = async () => {
   justify-content: center;
   gap: 10px;
 }
-
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 119, 182, 0.4);
 }
-
 .submit-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
-
 .status-message {
   margin-top: 20px;
   padding: 16px;
@@ -376,26 +339,22 @@ const submitForm = async () => {
   gap: 10px;
   font-size: 14px;
 }
-
 .status-message.success {
   background: rgba(34, 197, 94, 0.1);
   border: 1px solid rgba(34, 197, 94, 0.3);
   color: #22c55e;
 }
-
 .status-message.error {
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
   color: #ef4444;
 }
-
 @media (max-width: 968px) {
   .contact-content { grid-template-columns: 1fr; }
   .contact-info { order: 2; flex-direction: row; flex-wrap: wrap; }
   .info-card { flex: 1; min-width: 250px; }
   .contact-form { order: 1; }
 }
-
 @media (max-width: 768px) {
   .contact-header h1 { font-size: 36px; }
   .contact-info { flex-direction: column; }

@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import preview from "../assets/ancs-app.png"
-
 const emit = defineEmits(['open-auth'])
 const openAuth = (type) => emit('open-auth', type)
 </script>
-
+⋮----
 <template>
   <section class="hero">
     <div class="hero-content">
@@ -23,7 +22,6 @@ const openAuth = (type) => emit('open-auth', type)
       </div>
     </div>
   </section>
-
   <section class="stats">
     <div class="stats-grid">
       <div class="stat-card"><h2>10x</h2><p>Faster Configuration</p></div>
@@ -31,7 +29,6 @@ const openAuth = (type) => emit('open-auth', type)
       <div class="stat-card"><h2>24/7</h2><p>Automation</p></div>
     </div>
   </section>
-
   <section class="platforms">
     <h2>Works With</h2>
     <div class="platform-grid">
@@ -43,7 +40,6 @@ const openAuth = (type) => emit('open-auth', type)
       <div class="platform">📡 Telnet</div>
     </div>
   </section>
-
   <section class="tech">
     <h2>Built With Modern Technologies</h2>
     <div class="tech-icons">
@@ -54,7 +50,6 @@ const openAuth = (type) => emit('open-auth', type)
       <div class="tech-card">PostgreSQL</div>
     </div>
   </section>
-
   <section class="overview">
     <div class="container">
       <h2>What is ANCS?</h2>
@@ -67,7 +62,6 @@ const openAuth = (type) => emit('open-auth', type)
       </p>
     </div>
   </section>
-
   <section class="advantages">
     <h2>Why Engineers Use ANCS</h2>
     <div class="adv-grid">
@@ -77,7 +71,6 @@ const openAuth = (type) => emit('open-auth', type)
       <div class="adv-card"><h3>Centralized</h3><p>Manage all devices from a single dashboard.</p></div>
     </div>
   </section>
-
   <section class="workflow">
     <h2>How ANCS Works</h2>
     <div class="steps">
@@ -87,7 +80,6 @@ const openAuth = (type) => emit('open-auth', type)
       <div class="step"><span>4</span><p>Deploy Securely</p></div>
     </div>
   </section>
-
   <section class="preview">
     <h2>Application Preview</h2>
     <p>Experience the intuitive ANCS interface</p>
@@ -95,7 +87,6 @@ const openAuth = (type) => emit('open-auth', type)
       <img :src="preview" class="preview-img">
     </div>
   </section>
-
   <section class="cta">
     <h2>Start Automating Your Network Today</h2>
     <div class="cta-buttons">
@@ -104,17 +95,16 @@ const openAuth = (type) => emit('open-auth', type)
     </div>
   </section>
 </template>
-
+⋮----
 <style scoped>
 section { padding: 100px 20px; text-align: center; }
 h2 { font-size: clamp(28px, 5vw, 42px); margin-bottom: 30px; color: var(--text-primary, #fff); }
 p { color: var(--text-muted, #cbd5e1); }
-
 /* HERO */
 .hero {
   min-height: 100vh; padding: 72px 20px 60px;
-  background: linear-gradient(180deg, #0b1c2c, #081520);
-  color: white; display: flex; justify-content: center; align-items: center;
+  background: var(--hero-bg-gradient);
+  color: #fff; display: flex; justify-content: center; align-items: center;
 }
 .hero-content {
   display: flex; flex-direction: column; align-items: center;
@@ -123,71 +113,61 @@ p { color: var(--text-muted, #cbd5e1); }
 .hero-logo { width: clamp(70px, 15vw, 100px); margin-bottom: 20px; border-radius: 18px; box-shadow: 0 8px 32px rgba(66,165,245,0.25); }
 .hero h1 { font-size: clamp(42px, 10vw, 72px); font-weight: 900; line-height: 1.1; color: #fff; }
 .hero h3 { font-size: clamp(14px, 3.5vw, 20px); color: #42a5f5; margin: 12px 0 16px; font-weight: 500; }
-.hero > .hero-content > p { font-size: clamp(14px, 3vw, 17px); max-width: 560px; color: rgba(255,255,255,0.7); }
+.hero > .hero-content > p { font-size: clamp(14px, 3vw, 17px); max-width: 560px; color: var(--text-muted); }
 .buttons { margin-top: 30px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
 .btn { padding: 13px 26px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s; font-family: inherit; cursor: pointer; font-size: clamp(13px, 3vw, 15px); }
-.primary { background: #0077b6; color: white; border: none; }
+.primary { background: #0077b6; color: var(--text-primary); border: none; }
 .primary:hover { background: #0096c7; transform: translateY(-3px); }
 .secondary { border: 1px solid rgba(66,165,245,0.5); color: #42a5f5; background: rgba(66,165,245,0.08); }
 .secondary:hover { background: rgba(66,165,245,0.2); transform: translateY(-3px); }
-.ghost { border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); background: none; }
-.ghost:hover { border-color: rgba(255,255,255,0.5); color: white; }
-
+.ghost { border: 1px solid rgba(255,255,255,0.25); color: var(--text-muted); background: none; }
+.ghost:hover { border-color: var(--text-secondary); color: var(--text-primary); }
 /* STATS */
-.stats { background: #081520; }
+.stats { background: var(--body-bg); }
 .stats-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-.stat-card { background: #16293d; padding: 30px 40px; border-radius: 10px; transition: 0.3s; min-width: 140px; }
+.stat-card { background: var(--card-bg-solid); padding: 30px 40px; border-radius: 10px; transition: 0.3s; min-width: 140px; }
 .stat-card h2 { color: #42a5f5; }
-.stat-card:hover { transform: translateY(-6px) scale(1.05); background: #1e3f5f; }
-
+.stat-card:hover { transform: translateY(-6px) scale(1.05); background: var(--card-bg-hover); }
 /* PLATFORMS */
-.platforms { background: #102b44; color: white; }
+.platforms { background: var(--section-alt-bg); color: var(--text-primary); }
 .platform-grid { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-.platform { background: #16293d; padding: 14px 22px; border-radius: 12px; font-size: clamp(14px, 3vw, 18px); transition: 0.3s; color: #fff; }
-.platform:hover { transform: translateY(-6px); background: #1e3f5f; }
-
+.platform { background: var(--card-bg-solid); padding: 14px 22px; border-radius: 12px; font-size: clamp(14px, 3vw, 18px); transition: 0.3s; color: var(--text-primary); }
+.platform:hover { transform: translateY(-6px); background: var(--card-bg-hover); }
 /* TECH */
-.tech { background: #102b44; color: white; }
+.tech { background: var(--section-alt-bg); color: var(--text-primary); }
 .tech-icons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-.tech-card { background: #16293d; padding: 16px 24px; border-radius: 10px; transition: 0.3s; font-size: clamp(13px, 3vw, 16px); color: #fff; }
-.tech-card:hover { transform: translateY(-5px); background: #1d3a57; }
-
+.tech-card { background: var(--card-bg-solid); padding: 16px 24px; border-radius: 10px; transition: 0.3s; font-size: clamp(13px, 3vw, 16px); color: var(--text-primary); }
+.tech-card:hover { transform: translateY(-5px); background: var(--card-bg-hover); }
 /* OVERVIEW */
-.overview { background: #0b1c2c; }
-.overview p { max-width: 700px; margin: auto; line-height: 1.7; color: rgba(255,255,255,0.7); }
-
+.overview { background: var(--body-bg); }
+.overview p { max-width: 700px; margin: auto; line-height: 1.7; color: var(--text-muted); }
 /* ADVANTAGES */
-.advantages { background: #102b44; }
+.advantages { background: var(--section-alt-bg); }
 .adv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-.adv-card { background: #16293d; padding: 28px; border-radius: 12px; transition: 0.3s; }
+.adv-card { background: var(--card-bg-solid); padding: 28px; border-radius: 12px; transition: 0.3s; }
 .adv-card h3 { color: #42a5f5; margin-bottom: 10px; }
-.adv-card p { color: rgba(255,255,255,0.65); }
-.adv-card:hover { transform: translateY(-6px); background: #1e3f5f; }
-
+.adv-card p { color: var(--text-muted); }
+.adv-card:hover { transform: translateY(-6px); background: var(--card-bg-hover); }
 /* WORKFLOW */
-.workflow { background: #0b1c2c; }
+.workflow { background: var(--body-bg); }
 .steps { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-.step { background: #16293d; padding: 25px; border-radius: 10px; width: clamp(140px, 40vw, 200px); transition: 0.3s; }
+.step { background: var(--card-bg-solid); padding: 25px; border-radius: 10px; width: clamp(140px, 40vw, 200px); transition: 0.3s; }
 .step:hover { transform: translateY(-6px); }
 .step span { font-size: 30px; font-weight: bold; color: #42a5f5; display: block; margin-bottom: 8px; }
-.step p { color: rgba(255,255,255,0.7); }
-
+.step p { color: var(--text-muted); }
 /* PREVIEW */
-.preview { background: #102b44; }
+.preview { background: var(--section-alt-bg); }
 .preview-box {
-  margin-top: 40px; background: #0b1c2c; padding: 16px;
+  margin-top: 40px; background: var(--body-bg); padding: 16px;
   border-radius: 15px; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
   display: inline-block; animation: float 6s ease-in-out infinite;
   max-width: 100%; overflow: hidden;
 }
 .preview-img { width: 900px; max-width: 100%; border-radius: 10px; display: block; }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
 /* CTA */
-.cta { background: linear-gradient(180deg, #0b1c2c, #081520); }
+.cta { background: var(--hero-bg-gradient); }
 .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-
 /* MOBILE */
 @media (max-width: 600px) {
   section { padding: 80px 16px; }

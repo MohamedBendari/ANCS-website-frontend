@@ -210,17 +210,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="user in demoUsers" :key="user.id" class="table-row">
+                  <tr v-for="user in users" :key="user.id" class="table-row">
                     <td>
                       <div class="cell-user">
-                        <div class="mini-avatar" :style="{ background: user.color }">{{ user.name.charAt(0) }}</div>
-                        {{ user.name }}
+                        <div class="mini-avatar" :style="{ background: user.color }">{{ user.username.charAt(0) }}</div>
+                        {{user.username}}
                       </div>
                     </td>
                     <td class="cell-email">{{ user.email }}</td>
                     <td><span :class="['role-badge', user.role]">{{ user.role }}</span></td>
-                    <td><span :class="['status-dot', user.status]">● {{ user.status }}</span></td>
-                    <td class="cell-date">{{ user.joined }}</td>
+                    <td><span :class="['status-dot', user.is_active ? 'active' : 'inactive']">● {{ user.is_active ? 'active' : 'inactive' }}</span></td>
+                    <td class="cell-date">{{ formatDate(user.date_joined) }}</td>
                     <td>
                       <div class="action-btns">
                         <button class="act-btn edit"><i class="fas fa-pen"></i></button>
@@ -415,6 +415,7 @@ const activeSection = ref("messages")
 const search = ref("")
 const filterPurpose = ref("")
 const messages = ref([])
+const users = ref([])
 const next = ref(null)
 const previous = ref(null)
 const currentPage = ref(1)
@@ -475,13 +476,28 @@ const currentSectionLabel = computed(() => {
   return navItems.find(i => i.id === activeSection.value)?.label || 'messages'
 })
 
-// ── Demo users ──
-const demoUsers = ref([
-  { id: 1, name: 'Mohamed Bendary', email: 'bendary@ancs.io', role: 'admin', status: 'active', joined: 'Jan 2026', color: '#0077b6' },
-  { id: 2, name: 'Mohamed Ehab',    email: 'ehab@ancs.io',    role: 'editor', status: 'active', joined: 'Feb 2026', color: '#e91e63' },
-  { id: 3, name: 'Zyad',           email: 'zyad@ancs.io',    role: 'viewer', status: 'inactive', joined: 'Mar 2026', color: '#4caf50' },
-  { id: 4, name: 'Youssef',        email: 'youssef@ancs.io', role: 'viewer', status: 'active', joined: 'Mar 2026', color: '#ff9800' },
-])
+const fetchUsers = async () => {
+
+  try {
+
+    const res = await fetch(
+      'http://127.0.0.1:8000/api/users/',
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.token}`
+        }
+      }
+    )
+
+    const data = await res.json()
+
+    users.value = data
+
+  } catch (err) {
+
+    console.error('Users fetch error:', err)
+  }
+}
 
 // ── Data fetching ──
 const fetchMessages = async (url = 'http://127.0.0.1:8000/api/messages/') => {
@@ -526,8 +542,10 @@ const toggleLang  = () => setLang(lang.value === 'en' ? 'ar' : 'en')
 
 const logout = () => { authStore.logout(); router.push('/') }
 
-onMounted(fetchMessages)
-</script>
+onMounted(() => {
+  fetchMessages()
+  fetchUsers()
+})</script>
 
 <style scoped>
 /* ══════════════ ROOT ══════════════ */
@@ -995,5 +1013,11 @@ td { padding: 14px 20px; font-size: 13.5px; color: var(--text); vertical-align: 
 }
 @media (max-width: 480px) {
   .stats-row { grid-template-columns: 1fr; }
+  /* Remove blur for better mobile rendering */
+  .msg-modal-overlay { 
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(0,0,0,0.85) !important;
+  }
 }
 </style>

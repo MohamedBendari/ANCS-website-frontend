@@ -1,7 +1,6 @@
-<script setup>
+﻿<script setup>
 import { computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
-
 const emit = defineEmits(['open-auth'])
 const openAuth = (type) => emit('open-auth', type)
 const authStore = useAuthStore()
@@ -16,7 +15,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
         <h1>Download ANCS</h1>
         <p>Choose your platform and start automating your network configuration today</p>
       </div>
-
       <div class="download-content">
         <!-- Main Download Card -->
         <div class="main-download">
@@ -27,7 +25,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
             </div>
             <h2>ANCS v1.0.0</h2>
             <p class="version-info">Stable Release • Released March 2026</p>
-            
             <div class="system-requirements">
               <h4>System Requirements:</h4>
               <ul>
@@ -37,7 +34,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
                 <li><i class="fas fa-check"></i> GNS3 (optional but recommended)</li>
               </ul>
             </div>
-
             <div class="download-buttons">
               <!-- لو مش logged in — يطلب login -->
               <div v-if="!isLoggedIn" class="login-gate">
@@ -50,14 +46,9 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
                   <i class="fas fa-user-plus"></i> Create Account
                 </button>
               </div>
-
               <!-- لو logged in — يظهر أزرار التحميل -->
               <template v-else>
-                <a
-                  href="https://raw.githubusercontent.com/MOHAmED3467/ANCS-website/main/public/ANCS.exe"
-                  class="btn primary"
-                  download
-                >
+                <a href="https://raw.githubusercontent.com/MOHAmED3467/ANCS-website/main/public/ANCS.exe" class="btn primary" download>
                   <i class="fab fa-windows"></i>
                   Download for Windows
                 </a>
@@ -69,11 +60,9 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
             </div>
           </div>
         </div>
-
         <!-- Alternative Downloads -->
         <div class="alt-downloads">
           <h3>Other Download Options</h3>
-          
           <div class="alt-grid">
             <a href="https://github.com/MOHAmED3467/ANCS-website" target="_blank" class="alt-card">
               <div class="alt-icon">
@@ -85,7 +74,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
               </div>
               <i class="fas fa-arrow-right"></i>
             </a>
-
             <div class="alt-card">
               <div class="alt-icon docker">
                 <i class="fab fa-docker"></i>
@@ -96,7 +84,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
               </div>
               <span class="badge">Soon</span>
             </div>
-
             <div class="alt-card">
               <div class="alt-icon docs">
                 <i class="fas fa-book"></i>
@@ -109,11 +96,9 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
             </div>
           </div>
         </div>
-
         <!-- Installation Steps -->
         <div class="installation-guide">
           <h3>Quick Installation Guide</h3>
-          
           <div class="steps">
             <div class="step">
               <div class="step-number">1</div>
@@ -122,7 +107,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
                 <p>Download the installer for your operating system</p>
               </div>
             </div>
-
             <div class="step">
               <div class="step-number">2</div>
               <div class="step-content">
@@ -130,7 +114,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
                 <p>Run <code>pip install -r requirements.txt</code> and <code>npm install</code></p>
               </div>
             </div>
-
             <div class="step">
               <div class="step-number">3</div>
               <div class="step-content">
@@ -138,7 +121,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
                 <p>Edit config.json with your network settings</p>
               </div>
             </div>
-
             <div class="step">
               <div class="step-number">4</div>
               <div class="step-content">
@@ -148,7 +130,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
             </div>
           </div>
         </div>
-
         <!-- Support -->
         <div class="support-section">
           <div class="support-card">
@@ -169,19 +150,16 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
 .download {
   min-height: 100vh;
   padding: 120px 20px 80px;
-  background: linear-gradient(135deg, #0b1c2c 0%, #16293d 100%);
+  background: var(--page-bg-gradient);
 }
-
 .container {
   max-width: 1000px;
   margin: 0 auto;
 }
-
 .section-header {
   text-align: center;
   margin-bottom: 60px;
 }
-
 .subtitle {
   display: inline-block;
   padding: 8px 20px;
@@ -195,7 +173,6 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   letter-spacing: 1px;
   margin-bottom: 20px;
 }
-
 .section-header h1 {
   font-size: 56px;
   font-weight: 800;
@@ -204,29 +181,25 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: #fff;
+  color: var(--text-primary);
 }
-
 .section-header p {
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
 }
-
 .download-content {
   display: flex;
   flex-direction: column;
   gap: 50px;
 }
-
 /* Main Download Card */
 .main-download {
   display: flex;
   justify-content: center;
 }
-
 .download-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 24px;
   padding: 50px;
   text-align: center;
@@ -235,13 +208,11 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   position: relative;
   transition: all 0.4s ease;
 }
-
 .download-card:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg);
   border-color: rgba(66, 165, 245, 0.2);
   transform: translateY(-5px);
 }
-
 .card-badge {
   position: absolute;
   top: 20px;
@@ -251,9 +222,8 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   border-radius: 50px;
   font-size: 12px;
   font-weight: 600;
-  color: white;
+  color: var(--text-primary);
 }
-
 .platform-icon {
   width: 100px;
   height: 100px;
@@ -264,63 +234,54 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   justify-content: center;
   margin: 0 auto 30px;
   font-size: 40px;
-  color: white;
+  color: var(--text-primary);
   box-shadow: 0 15px 40px rgba(66, 165, 245, 0.3);
 }
-
 .download-card h2 {
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 10px;
-  color: white;
+  color: var(--text-primary);
 }
-
 .version-info {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-secondary);
   font-size: 15px;
   margin-bottom: 30px;
 }
-
 .system-requirements {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--card-bg);
   border-radius: 16px;
   padding: 25px;
   margin-bottom: 30px;
   text-align: left;
 }
-
 .system-requirements h4 {
   font-size: 16px;
   margin-bottom: 15px;
-  color: white;
+  color: var(--text-primary);
 }
-
 .system-requirements ul {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
 .system-requirements li {
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-muted);
 }
-
 .system-requirements li i {
   color: #4caf50;
   font-size: 12px;
 }
-
 .download-buttons {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-
 .login-gate {
   display: flex;
   flex-direction: column;
@@ -333,15 +294,25 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   text-align: center;
 }
 .gate-icon {
-  width: 60px; height: 60px;
+  width: 60px;
+  height: 60px;
   background: rgba(66,165,245,0.1);
   border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; color: #42a5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #42a5f5;
 }
-.login-gate p { color: rgba(255,255,255,0.7); font-size: 15px; margin: 0; }
-.gate-btn { width: 100%; justify-content: center; }
-
+.login-gate p {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin: 0;
+}
+.gate-btn {
+  width: 100%;
+  justify-content: center;
+}
 .btn {
   padding: 16px 32px;
   border-radius: 12px;
@@ -354,72 +325,61 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   gap: 10px;
   transition: all 0.3s ease;
 }
-
 .btn.primary {
   background: linear-gradient(135deg, #0077b6, #0096c7);
-  color: white;
+  color: var(--text-primary);
   box-shadow: 0 4px 15px rgba(0, 119, 182, 0.4);
 }
-
 .btn.primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 119, 182, 0.5);
 }
-
 .btn.secondary {
   background: rgba(255, 255, 255, 0.1);
-  color: white;
+  color: var(--text-primary);
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
-
 .btn.secondary:hover {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.4);
 }
-
 .btn.outline {
   background: transparent;
   color: #42a5f5;
   border: 2px solid #42a5f5;
 }
-
 .btn.outline:hover {
   background: rgba(66, 165, 245, 0.1);
 }
-
 /* Alternative Downloads */
 .alt-downloads h3 {
   font-size: 24px;
   margin-bottom: 25px;
-  color: white;
+  color: var(--text-primary);
   text-align: center;
 }
-
 .alt-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-
 .alt-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 25px;
   display: flex;
   align-items: center;
   gap: 15px;
   text-decoration: none;
-  color: white;
+  color: var(--text-primary);
   transition: all 0.3s ease;
 }
-
 .alt-card:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--card-bg-hover);
   border-color: rgba(66, 165, 245, 0.2);
   transform: translateY(-3px);
 }
-
 .alt-icon {
   width: 50px;
   height: 50px;
@@ -432,36 +392,29 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   color: #42a5f5;
   flex-shrink: 0;
 }
-
 .alt-icon.docker {
   color: #2496ed;
   background: rgba(36, 150, 237, 0.1);
 }
-
 .alt-icon.docs {
   color: #ff9800;
   background: rgba(255, 152, 0, 0.1);
 }
-
 .alt-info {
   flex: 1;
 }
-
 .alt-info h4 {
   font-size: 16px;
   margin-bottom: 5px;
 }
-
 .alt-info p {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-secondary);
 }
-
 .alt-card > i {
   color: #42a5f5;
   font-size: 14px;
 }
-
 .badge {
   padding: 4px 12px;
   background: rgba(255, 152, 0, 0.2);
@@ -470,35 +423,30 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   font-size: 12px;
   color: #ff9800;
 }
-
 /* Installation Guide */
 .installation-guide h3 {
   font-size: 24px;
   margin-bottom: 30px;
-  color: white;
+  color: var(--text-primary);
   text-align: center;
 }
-
 .steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
-
 .step {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 30px 20px;
   text-align: center;
   transition: all 0.3s ease;
 }
-
 .step:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--card-bg-hover);
   transform: translateY(-5px);
 }
-
 .step-number {
   width: 50px;
   height: 50px;
@@ -509,22 +457,19 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   justify-content: center;
   font-size: 20px;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   margin: 0 auto 20px;
 }
-
 .step-content h4 {
   font-size: 16px;
   margin-bottom: 10px;
-  color: white;
+  color: var(--text-primary);
 }
-
 .step-content p {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
   line-height: 1.5;
 }
-
 .step-content code {
   background: rgba(0, 0, 0, 0.3);
   padding: 2px 6px;
@@ -533,13 +478,11 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   font-size: 12px;
   color: #4caf50;
 }
-
 /* Support Section */
 .support-section {
   display: flex;
   justify-content: center;
 }
-
 .support-card {
   background: linear-gradient(135deg, rgba(66, 165, 245, 0.1), rgba(0, 119, 182, 0.1));
   border: 1px solid rgba(66, 165, 245, 0.2);
@@ -548,49 +491,40 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
   text-align: center;
   max-width: 500px;
 }
-
 .support-card > i {
   font-size: 48px;
   color: #42a5f5;
   margin-bottom: 20px;
 }
-
 .support-card h3 {
   font-size: 24px;
   margin-bottom: 10px;
-  color: white;
+  color: var(--text-primary);
 }
-
 .support-card p {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
   margin-bottom: 25px;
 }
-
 /* Responsive */
 @media (max-width: 968px) {
   .steps {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .alt-grid {
     grid-template-columns: 1fr;
   }
 }
-
 @media (max-width: 768px) {
   .section-header h1 {
     font-size: 36px;
   }
-
   .download-card {
     padding: 30px 20px;
   }
-
   .steps {
     grid-template-columns: 1fr;
   }
-
   .download-buttons .btn {
     font-size: 14px;
   }

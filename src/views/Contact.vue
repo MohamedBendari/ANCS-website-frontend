@@ -179,10 +179,6 @@ const submitForm = async () => {
   font-size: 48px;
   font-weight: 700;
   margin-bottom: 20px;
-  background: linear-gradient(135deg, #ffffff, #42a5f5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   color: var(--text-primary);
 }
 .contact-header p {

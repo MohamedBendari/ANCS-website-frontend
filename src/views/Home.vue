@@ -102,7 +102,13 @@ h2 { font-size: clamp(28px, 5vw, 42px); margin-bottom: 30px; color: var(--text-p
 p { color: var(--text-muted, #cbd5e1); }
 /* HERO */
 .hero {
-  min-height: 100vh; padding: 72px 20px 60px;
+ 
+  min-height: 100vh;
+  padding: 140px 20px 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: auto;
   background: var(--hero-bg-gradient);
   color: #fff; display: flex; justify-content: center; align-items: center;
 }
